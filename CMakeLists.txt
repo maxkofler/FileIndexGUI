@@ -20,6 +20,15 @@ file(GLOB_RECURSE CXX_SOURCES "gui/src/**.cpp")
 file(GLOB_RECURSE HEADERS "gui/include/**.h")
 file(GLOB_RECURSE UI_SOURCES "gui/ui/**.ui")
 
+add_subdirectory(FileIndex/Log)
+include_directories(FileIndex/Log/include)
+
+add_subdirectory(FileIndex/NamesDB)
+include_directories(FileIndex/NamesDB/include)
+
+add_subdirectory(FileIndex/fileindex)
+include_directories(FileIndex/fileindex/include)
+
 include_directories(gui/include)
 
 set(PROJECT_SOURCES

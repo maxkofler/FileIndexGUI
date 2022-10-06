@@ -1,0 +1,3 @@
+[submodule "FileIndex"]
+	path = FileIndex
+	url = https://github.com/maxkofler/FileIndex
