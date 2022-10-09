@@ -2,6 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QThread>
+#include <QProgressDialog>
+#include <QListView>
+#include <QStringList>
+#include <QStringListModel>
+
+#include <deque>
+
+#include "indexthread.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,7 +24,59 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+signals:
+    /**
+     * @brief   Displays a new status message in the status bar
+     * @param message
+     * @param timeout
+     */
+    void                        showNewStatusMessage(const QString &message, int timeout = 0);
+
 private:
     Ui::MainWindow *ui;
+
+    //The objects for the fileindex functionality
+    NamesDB*                    _db = nullptr;
+    FS*                         _fs = nullptr;
+    FileIndex*                  _index = nullptr;
+    IndexThread*                _indexThread = nullptr;
+    QMetaObject::Connection     _c_indexThread;
+
+    //Objects for results list
+    QListView*                  _lv_results = nullptr;
+    QStringListModel*           _m_results;
+    QStringList                 _sl_results;
+
+private slots:
+    /**
+     * @brief   Gets called a new index should be added
+     */
+    void                        onNewIndex();
+
+    /**
+     * @brief   Tells the main window a new fs entry has been found, updates the status bar
+     * @param   path            The path of the entry
+     * @param   id              The id of the entry
+     * @param   isDir           If it is a directory
+     */
+    void                        onIndexFound(const QString& path, size_t id, bool isDir);
+
+    /**
+     * @brief   Tells the class that the indexing process has been finished and the indexer can be cleaned up
+     */
+    void                        onIndexDone();
+
+    /**
+     * @brief   If the text in the search bar has changed, triggers a new search
+     * @param   text            The new text in the bar
+     */
+    void                        onTeTextChanged(const QString& text);
+
+    /**
+     * @brief   Gets called every time the user double-clicked a result
+     * @param   index           The position the user clicked
+     */
+    void                        onResultDoubleClicked(const QModelIndex& index);
+
 };
 #endif // MAINWINDOW_H

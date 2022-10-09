@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<TS version="2.1" language="de_DE">
 <context>
     <name>MainWindow</name>
     <message>
@@ -15,14 +15,14 @@
         <location filename="../build/FileIndexGUI_autogen/ui/ui_mainwindow.h" line="82"/>
         <location filename="../build/ui/ui_mainwindow.h" line="86"/>
         <source>File</source>
-        <translation type="unfinished">File</translation>
+        <translation type="unfinished">Datei</translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="46"/>
         <location filename="../build/FileIndexGUI_autogen/ui/ui_mainwindow.h" line="81"/>
         <location filename="../build/ui/ui_mainwindow.h" line="82"/>
         <source>Index</source>
-        <translation type="unfinished">Index new Filesystem</translation>
+        <translation type="unfinished">Neues Dateisystem indizieren</translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="49"/>
@@ -36,7 +36,7 @@
     <message>
         <location filename="../gui/src/main.cpp" line="16"/>
         <source>Starting up...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Starte...</translation>
     </message>
 </context>
 </TS>
