@@ -7,10 +7,12 @@
 #include <QListView>
 #include <QStringList>
 #include <QStringListModel>
+#include <QFutureWatcher>
 
 #include <deque>
 
 #include "indexthread.h"
+#include "stats.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -47,6 +49,10 @@ private:
     QStringListModel*           _m_results;
     QStringList                 _sl_results;
 
+    QFutureWatcher<std::deque<namesDB_searchRes>> _searchWatcher;
+
+    stats_search                _search_stats;
+
 private slots:
     /**
      * @brief   Gets called a new index should be added
@@ -62,9 +68,14 @@ private slots:
     void                        onIndexFound(const QString& path, size_t id, bool isDir);
 
     /**
-     * @brief   Tells the class that the indexing process has been finished and the indexer can be cleaned up
+     * @brief   Notifies the class that the indexing process has been finished and the indexer can be cleaned up
      */
     void                        onIndexDone();
+
+    /**
+     * @brief   Notifies this class that the searching process is done
+     */
+    void                        onSearchDone();
 
     /**
      * @brief   If the text in the search bar has changed, triggers a new search

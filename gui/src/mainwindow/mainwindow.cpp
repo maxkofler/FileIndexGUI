@@ -5,10 +5,15 @@
 #include "fileIndex.h"
 
 #include <iostream>
+#include <chrono>
 
 #include <QFileDialog>
 #include <QShortcut>
 #include <QKeySequence>
+
+#include <QFuture>
+#include <QFutureWatcher>
+#include <QtConcurrent/QtConcurrentRun>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
     ui->setupUi(this);
@@ -58,6 +63,7 @@ void MainWindow::onNewIndex(){
     QObject::connect(_indexThread, &IndexThread::done, this, &MainWindow::onIndexDone, Qt::QueuedConnection);
 
     _indexThread->start();
+    ui->lineEdit->setDisabled(true);
 }
 
 //SLOTS
@@ -73,10 +79,12 @@ void MainWindow::onIndexDone(){
     _db->updateIndex();
     LOGU("[MainWindow][onIndexDone] Finished indexing");
     onTeTextChanged("");
+    ui->lineEdit->setDisabled(false);
 }
 
-void MainWindow::onTeTextChanged(const QString& text){
-    auto searchRes = _db->searchAll(text.toStdString(), false);
+void MainWindow::onSearchDone(){
+    auto searchRes = _searchWatcher.future().result();
+
     if (searchRes.size() == 0){
         emit showNewStatusMessage(QString().fromStdString("No matches!"));
         _sl_results.clear();
@@ -84,17 +92,21 @@ void MainWindow::onTeTextChanged(const QString& text){
         return;
     }
 
-    std::sort(searchRes.begin(), searchRes.end(), [](const namesDB_searchRes &a, const namesDB_searchRes &b) -> bool {
-        return a.matchRemaining < b.matchRemaining;
-    });
+    {
+        std::string logMsg;
+        if (searchRes.size() > 1000){
+            logMsg = "Showing 1000 of " + std::to_string(searchRes.size()) + " results";
 
-    if (searchRes.size() > 1000){
-        std::string msg = "Showing only best 1000 of " + std::to_string(searchRes.size()) + " results";
-        emit showNewStatusMessage(QString().fromStdString(msg));
-    } else {
-        std::string msg = "Showing " + std::to_string(searchRes.size()) + " results";
-        emit showNewStatusMessage(QString().fromStdString(msg));
+        } else {
+            logMsg = "Showing " + std::to_string(searchRes.size()) + " results";
+        }
+
+        logMsg += ", searching took " + std::to_string(_search_stats.us_search) + " us";
+        logMsg += ", sorting took " + std::to_string(_search_stats.us_sort) + " us";
+
+        emit showNewStatusMessage(QString().fromStdString(logMsg));
     }
+
 
     _sl_results.clear();
     namesDB_searchRes res;
@@ -111,6 +123,30 @@ void MainWindow::onTeTextChanged(const QString& text){
         _sl_results.append(QString().fromStdString(name));
     }
     _m_results->setStringList(_sl_results);
+}
+
+void MainWindow::onTeTextChanged(const QString& text){
+
+    QFuture<std::deque<namesDB_searchRes>> threadRes = QtConcurrent::run([=]() {
+        auto start = std::chrono::high_resolution_clock::now();
+        auto searchRes = _db->searchAll(text.toStdString(), false);
+        auto stop = std::chrono::high_resolution_clock::now();
+        auto dur = std::chrono::duration_cast<std::chrono::microseconds>(stop-start);
+        _search_stats.us_search = dur.count();
+
+        start = std::chrono::high_resolution_clock::now();
+        std::sort(searchRes.begin(), searchRes.end(), [](const namesDB_searchRes &a, const namesDB_searchRes &b) -> bool {
+            return a.matchRemaining < b.matchRemaining;
+        });
+        stop = std::chrono::high_resolution_clock::now();
+        dur = std::chrono::duration_cast<std::chrono::microseconds>(stop-start);
+        _search_stats.us_sort = dur.count();
+
+        return searchRes;
+    });
+
+    QObject::connect(&_searchWatcher, &QFutureWatcher<std::deque<namesDB_searchRes>>::finished, this, &MainWindow::onSearchDone);
+    _searchWatcher.setFuture(threadRes);
 }
 
 void MainWindow::onResultDoubleClicked(const QModelIndex& index){

@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
+#include <QSettings>
 
 int main(int argc, char *argv[]){
     hlog = new Log::Log(Log::U);
@@ -11,6 +12,9 @@ int main(int argc, char *argv[]){
     {
         FUN();
         QApplication a(argc, argv);
+
+        a.setApplicationName("FileIndexGUI");
+        QSettings::setDefaultFormat(QSettings::IniFormat);
 
         QTranslator translator;
         LOGU("[Main] " + QApplication::tr("Starting up...").toStdString());
