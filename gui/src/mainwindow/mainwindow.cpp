@@ -3,6 +3,7 @@
 #include "../../ui/ui_mainwindow.h"
 
 #include "fileIndex.h"
+#include "indexdialog.h"
 
 #include <iostream>
 #include <chrono>
@@ -15,7 +16,7 @@
 #include <QFutureWatcher>
 #include <QtConcurrent/QtConcurrentRun>
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), _dialog(this){
     ui->setupUi(this);
 
     //Set up the results list
@@ -48,7 +49,10 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::onNewIndex(){
-    QFileDialog fDialog(this);
+    _dialog.setWindowModality(Qt::WindowModality::WindowModal);
+    _dialog.show();
+
+    /*QFileDialog fDialog(this);
     fDialog.setFileMode(QFileDialog::Directory);
     fDialog.exec();
     if (fDialog.selectedFiles().size() == 0){
@@ -63,7 +67,7 @@ void MainWindow::onNewIndex(){
     QObject::connect(_indexThread, &IndexThread::done, this, &MainWindow::onIndexDone, Qt::QueuedConnection);
 
     _indexThread->start();
-    ui->lineEdit->setDisabled(true);
+    ui->lineEdit->setDisabled(true);*/
 }
 
 //SLOTS

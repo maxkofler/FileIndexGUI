@@ -11,6 +11,7 @@
 
 #include <deque>
 
+#include "indexdialog.h"
 #include "indexthread.h"
 #include "stats.h"
 
@@ -52,6 +53,8 @@ private:
     QFutureWatcher<std::deque<namesDB_searchRes>> _searchWatcher;
 
     stats_search                _search_stats;
+
+    IndexDialog                 _dialog;
 
 private slots:
     /**

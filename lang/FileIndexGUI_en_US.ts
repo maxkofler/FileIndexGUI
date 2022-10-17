@@ -2,6 +2,27 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>IndexDialog</name>
+    <message>
+        <location filename="../gui/ui/indexdialog.ui" line="14"/>
+        <location filename="../build/ui/ui_indexdialog.h" line="74"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/indexdialog.ui" line="48"/>
+        <location filename="../build/ui/ui_indexdialog.h" line="75"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/indexdialog.ui" line="64"/>
+        <location filename="../build/ui/ui_indexdialog.h" line="76"/>
+        <source>Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="14"/>
