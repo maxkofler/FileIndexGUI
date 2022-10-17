@@ -33,17 +33,17 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>20</y>
+     <y>30</y>
      <width>371</width>
      <height>41</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QLineEdit" name="lineEdit"/>
+     <widget class="QLineEdit" name="le_path"/>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="bt_path">
       <property name="text">
        <string>...</string>
       </property>
@@ -51,7 +51,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="lb_path">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -63,6 +63,34 @@
    <property name="text">
     <string>Path</string>
    </property>
+  </widget>
+  <widget class="QLabel" name="lb_crate">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>90</y>
+     <width>101</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Crate (optional)</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>110</y>
+     <width>371</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QLineEdit" name="le_crate"/>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

@@ -8,7 +8,7 @@ class IndexThread : public QThread
 {
     Q_OBJECT
 public:
-    explicit                IndexThread(FileIndex& index, const std::string& rootPath, bool recursive, QObject *parent = nullptr);
+    explicit                IndexThread(FileIndex& index, const std::string& rootPath, bool recursive, const std::string& crateName = "", QObject *parent = nullptr);
 
 signals:
     /**
@@ -31,6 +31,7 @@ private:
     FileIndex&              _index;
     std::string             _rootPath;
     bool                    _recursive;
+    std::string             _crateName;
 
     /**
      * @brief   A helper method for the callback from the FileIndex class when indexing to redirect to indexFoundSlot

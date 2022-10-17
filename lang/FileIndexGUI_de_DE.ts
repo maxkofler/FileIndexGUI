@@ -5,20 +5,31 @@
     <name>IndexDialog</name>
     <message>
         <location filename="../gui/ui/indexdialog.ui" line="14"/>
-        <location filename="../build/ui/ui_indexdialog.h" line="74"/>
+        <location filename="../build/ui/ui_indexdialog.h" line="92"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gui/ui/indexdialog.ui" line="48"/>
-        <location filename="../build/ui/ui_indexdialog.h" line="75"/>
+        <location filename="../build/ui/ui_indexdialog.h" line="93"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gui/ui/indexdialog.ui" line="64"/>
-        <location filename="../build/ui/ui_indexdialog.h" line="76"/>
+        <location filename="../build/ui/ui_indexdialog.h" line="94"/>
         <source>Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/indexdialog.ui" line="77"/>
+        <location filename="../build/ui/ui_indexdialog.h" line="95"/>
+        <source>Crate (optional)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/src/indexdialog/indexdialog.cpp" line="27"/>
+        <source>Select the directory to index</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

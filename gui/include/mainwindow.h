@@ -70,6 +70,8 @@ private slots:
      */
     void                        onIndexFound(const QString& path, size_t id, bool isDir);
 
+    void                        onIndexDialogDone(int);
+
     /**
      * @brief   Notifies the class that the indexing process has been finished and the indexer can be cleaned up
      */

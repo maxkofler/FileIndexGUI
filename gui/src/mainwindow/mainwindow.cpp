@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     //Connect signals
     QObject::connect(ui->actionIndex, &QAction::triggered, this, &MainWindow::onNewIndex);
+    QObject::connect(&_dialog, &IndexDialog::finished, this, &MainWindow::onIndexDialogDone);
     QObject::connect(ui->lineEdit, &QLineEdit::textChanged, this, &MainWindow::onTeTextChanged);
     QObject::connect(this, &MainWindow::showNewStatusMessage, ui->statusbar, &QStatusBar::showMessage);
     QObject::connect(_lv_results, &QListView::doubleClicked, this, &MainWindow::onResultDoubleClicked);
@@ -48,29 +49,28 @@ MainWindow::~MainWindow(){
     delete _db;
 }
 
+//
+// SLOTS
+//
+
 void MainWindow::onNewIndex(){
     _dialog.setWindowModality(Qt::WindowModality::WindowModal);
     _dialog.show();
+}
 
-    /*QFileDialog fDialog(this);
-    fDialog.setFileMode(QFileDialog::Directory);
-    fDialog.exec();
-    if (fDialog.selectedFiles().size() == 0){
-        LOGU("[MainWindow][onNewIndex] No directory selected");
-        return;
-    }
-    std::string path = fDialog.selectedFiles().at(0).toStdString();
-    LOGU("[MainWindow][onNewIndex] Starting to index " + path);
+void MainWindow::onIndexDialogDone(int){
+    FUN();
 
-    _indexThread = new IndexThread(*_index, path, true);
+    std::string path = _dialog.getPath();
+    std::string crate = _dialog.getCrate();
+    LOGU("[MainWindow][onIndexDialogDone] Indexing " + path + "...");
+    _indexThread = new IndexThread(*_index, path, true, crate);
     _c_indexThread = QObject::connect(_indexThread, &IndexThread::indexFound, this, &MainWindow::onIndexFound, Qt::QueuedConnection);
     QObject::connect(_indexThread, &IndexThread::done, this, &MainWindow::onIndexDone, Qt::QueuedConnection);
 
     _indexThread->start();
-    ui->lineEdit->setDisabled(true);*/
+    ui->lineEdit->setDisabled(true);
 }
-
-//SLOTS
 
 void MainWindow::onIndexFound(const QString& name, size_t id, bool isDir){
     emit showNewStatusMessage(name);

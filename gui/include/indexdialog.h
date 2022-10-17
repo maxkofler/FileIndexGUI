@@ -14,10 +14,20 @@ class IndexDialog : public QDialog
 public:
     explicit IndexDialog(QWidget *parent = nullptr);
 
+    std::string                 getPath();
+
+    std::string                 getCrate();
+
 private:
     Ui::IndexDialog *ui;
 
+    std::string                 _path;
+
 signals:
+    void                        done();
+
+private slots:
+    void                        onSelectPath();
 
 };
 
