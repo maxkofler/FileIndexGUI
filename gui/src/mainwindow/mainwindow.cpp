@@ -96,7 +96,7 @@ void MainWindow::onActionImport(){
     LOGU("[MainWindow][importing] Importing database from " + path);
 
     std::ifstream inFile;
-    inFile.open(path, std::ios::in | std::ios::binary);
+    inFile.open(path, std::ios::out | std::ios::binary);
     if (!inFile.is_open()){
         LOGUE("[MainWindow][import] Failed to open file " + path + " for reading");
         return;
@@ -113,6 +113,8 @@ void MainWindow::onActionImport(){
     _db->updateIndex();
 
     inFile.close();
+
+    onTeTextChanged(ui->lineEdit->text());
 }
 
 void MainWindow::onIndexDialogDone(int){
