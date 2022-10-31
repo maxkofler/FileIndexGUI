@@ -37,26 +37,65 @@
     <name>MainWindow</name>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="14"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="81"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="90"/>
         <source>MainWindow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="37"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="86"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="103"/>
         <source>File</source>
         <translation type="unfinished">File</translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="46"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="82"/>
+        <location filename="../gui/ui/mainwindow.ui" line="49"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="91"/>
         <source>Index</source>
         <translation type="unfinished">Index new Filesystem</translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="49"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="84"/>
+        <location filename="../gui/ui/mainwindow.ui" line="52"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="93"/>
         <source>Ctrl+I</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/mainwindow.ui" line="60"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="95"/>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/mainwindow.ui" line="63"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="97"/>
+        <source>Ctrl+Shift+E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/mainwindow.ui" line="68"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="99"/>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/mainwindow.ui" line="71"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="101"/>
+        <source>Ctrl+Shift+I</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="68"/>
+        <source>Save FileIndex Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="68"/>
+        <source>FileIndex Database (*.fidb)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="88"/>
+        <source>Select the file to import</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

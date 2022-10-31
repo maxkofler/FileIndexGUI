@@ -63,6 +63,16 @@ private slots:
     void                        onNewIndex();
 
     /**
+     * @brief   Gets called when the database should be exported
+     */
+    void                        onActionExport();
+
+    /**
+     * @brief   Gets called when a database should be imported
+     */
+    void                        onActionImport();
+
+    /**
      * @brief   Tells the main window a new fs entry has been found, updates the status bar
      * @param   path            The path of the entry
      * @param   id              The id of the entry
@@ -70,6 +80,9 @@ private slots:
      */
     void                        onIndexFound(const QString& path, size_t id, bool isDir);
 
+    /**
+     * @brief   Gets called once the indexing dialog is done
+     */
     void                        onIndexDialogDone(int);
 
     /**

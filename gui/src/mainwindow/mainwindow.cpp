@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <chrono>
+#include <fstream>
 
 #include <QFileDialog>
 #include <QShortcut>
@@ -33,6 +34,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     //Connect signals
     QObject::connect(ui->actionIndex, &QAction::triggered, this, &MainWindow::onNewIndex);
+    QObject::connect(ui->actionExport, &QAction::triggered, this, &MainWindow::onActionExport);
+    QObject::connect(ui->actionImport, &QAction::triggered, this, &MainWindow::onActionImport);
+
     QObject::connect(&_dialog, &IndexDialog::finished, this, &MainWindow::onIndexDialogDone);
     QObject::connect(ui->lineEdit, &QLineEdit::textChanged, this, &MainWindow::onTeTextChanged);
     QObject::connect(this, &MainWindow::showNewStatusMessage, ui->statusbar, &QStatusBar::showMessage);
@@ -56,6 +60,59 @@ MainWindow::~MainWindow(){
 void MainWindow::onNewIndex(){
     _dialog.setWindowModality(Qt::WindowModality::WindowModal);
     _dialog.show();
+}
+
+void MainWindow::onActionExport(){
+    FUN();
+    LOGU("[MainWindow][export]");
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save FileIndex Database"), "db.fidb", tr("FileIndex Database (*.fidb)"));
+    std::string path = fileName.toStdString();
+    LOGU("[MainWindow][export] Saving database to " + path);
+
+    std::ofstream outFile;
+    outFile.open(path, std::ios::out | std::ios::binary);
+    if (!outFile.is_open()){
+        LOGUE("[MainWindow][export] Failed to open file " + path + " for writing");
+        return;
+    }
+
+    _db->exportDB(outFile);
+    _fs->exportFS(outFile);
+
+    outFile.close();
+}
+
+void MainWindow::onActionImport(){
+    FUN();
+    LOGU("[MainWindow][import]");
+    QFileDialog fDialog(this, tr("Select the file to import"));
+    fDialog.setFileMode(QFileDialog::ExistingFile);
+    fDialog.setNameFilter("FileIndex Database (*.fidb)");
+    fDialog.exec();
+    if (fDialog.selectedFiles().size() == 0){
+        return;
+    }
+    std::string path = fDialog.selectedFiles().at(0).toStdString();
+    LOGU("[MainWindow][importing] Importing database from " + path);
+
+    std::ifstream inFile;
+    inFile.open(path, std::ios::in | std::ios::binary);
+    if (!inFile.is_open()){
+        LOGUE("[MainWindow][import] Failed to open file " + path + " for reading");
+        return;
+    }
+
+    _db->clean();
+    if (!_db->importDB(inFile)){
+        LOGUE("[MainWindow][import] Failed to import database");
+    }
+
+    if (!_fs->importFS(inFile)){
+        LOGUE("[MainWindow][import] Failed to import filesystem");
+    }
+    _db->updateIndex();
+
+    inFile.close();
 }
 
 void MainWindow::onIndexDialogDone(int){

@@ -7,7 +7,7 @@
 #include <QSettings>
 
 int main(int argc, char *argv[]){
-    hlog = new Log::Log(Log::U);
+    hlog = new Log::Log(Log::MEM);
     int res = 0;
     {
         FUN();
