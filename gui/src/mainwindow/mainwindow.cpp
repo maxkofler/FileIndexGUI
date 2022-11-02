@@ -17,6 +17,8 @@
 #include <QFutureWatcher>
 #include <QtConcurrent/QtConcurrentRun>
 
+#include <QSettings>
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), _dialog(this){
     ui->setupUi(this);
 
@@ -38,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(ui->actionImport, &QAction::triggered, this, &MainWindow::onActionImport);
 
     QObject::connect(&_dialog, &IndexDialog::finished, this, &MainWindow::onIndexDialogDone);
-    QObject::connect(ui->lineEdit, &QLineEdit::textChanged, this, &MainWindow::onTeTextChanged);
+    QObject::connect(ui->le_search, &QLineEdit::textChanged, this, &MainWindow::onTeTextChanged);
     QObject::connect(this, &MainWindow::showNewStatusMessage, ui->statusbar, &QStatusBar::showMessage);
     QObject::connect(_lv_results, &QListView::doubleClicked, this, &MainWindow::onResultDoubleClicked);
 }
@@ -109,7 +111,7 @@ void MainWindow::onActionImport(){
 
     inFile.close();
 
-    onTeTextChanged(ui->lineEdit->text());
+    onTeTextChanged(ui->le_search->text());
 }
 
 void MainWindow::onIndexDialogDone(int){
@@ -123,7 +125,7 @@ void MainWindow::onIndexDialogDone(int){
     QObject::connect(_indexThread, &IndexThread::done, this, &MainWindow::onIndexDone, Qt::QueuedConnection);
 
     _indexThread->start();
-    ui->lineEdit->setDisabled(true);
+    ui->le_search->setDisabled(true);
 }
 
 void MainWindow::onIndexFound(const QString& name, size_t id, bool isDir){
@@ -137,7 +139,7 @@ void MainWindow::onIndexDone(){
     _db->updateIndex();
     LOGU("[MainWindow][onIndexDone] Finished indexing");
     onTeTextChanged("");
-    ui->lineEdit->setDisabled(false);
+    ui->le_search->setDisabled(false);
 }
 
 void MainWindow::onSearchDone(){
@@ -171,13 +173,9 @@ void MainWindow::onSearchDone(){
     std::string name;
     for (size_t i = 0; i < searchRes.size() && i < 1000; i++){
         res = searchRes.at(i);
-
-        if(res.data->isDir)
-            name = "[D] ";
-        else
-            name = "[F] ";
-
-        name += _fs->getEntryPathString(res.id);
+        name = _fs->getEntryPathString(res.id);
+        if (res.data->isDir)
+            name += "/";
         _sl_results.append(QString().fromStdString(name));
     }
     _m_results->setStringList(_sl_results);

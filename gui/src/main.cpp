@@ -6,15 +6,25 @@
 #include <QTranslator>
 #include <QSettings>
 
+#include <QStandardPaths>
+#include <QDir>
+
 int main(int argc, char *argv[]){
     hlog = new Log::Log(Log::D);
     int res = 0;
     {
         FUN();
-        QApplication a(argc, argv);
 
-        a.setApplicationName("FileIndexGUI");
+        QApplication::setOrganizationDomain("maxkofler.eu");
+        QApplication::setOrganizationName("maxkofler");
+        QApplication::setApplicationName("FileIndexGUI");
         QSettings::setDefaultFormat(QSettings::IniFormat);
+
+        QSettings s;
+        LOGU("[MainWindow] Testvalue in settings: " + std::to_string(s.value("test/testInt", 0).toInt()));
+        s.setValue("test/testInt", s.value("test/testInt", 0).toInt()+1);
+
+        QApplication a(argc, argv);
 
         QTranslator translator;
         LOGU("[Main] " + QApplication::tr("Starting up...").toStdString());

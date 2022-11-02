@@ -2,6 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>FileIndexGUI</name>
+    <message>
+        <source>File</source>
+        <translation type="obsolete">File</translation>
+    </message>
+    <message>
+        <source>Index</source>
+        <translation type="obsolete">Index new Filesystem</translation>
+    </message>
+</context>
+<context>
     <name>IndexDialog</name>
     <message>
         <location filename="../gui/ui/indexdialog.ui" line="14"/>
@@ -38,7 +49,7 @@
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="14"/>
         <location filename="../build/ui/ui_mainwindow.h" line="90"/>
-        <source>MainWindow</source>
+        <source>FileIndexGUI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -84,17 +95,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="68"/>
+        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="70"/>
         <source>Save FileIndex Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="68"/>
+        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="70"/>
         <source>FileIndex Database (*.fidb)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="87"/>
+        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="89"/>
         <source>Select the file to import</source>
         <translation type="unfinished"></translation>
     </message>
@@ -102,7 +113,7 @@
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../gui/src/main.cpp" line="20"/>
+        <location filename="../gui/src/main.cpp" line="30"/>
         <source>Starting up...</source>
         <translation type="unfinished"></translation>
     </message>
