@@ -39,7 +39,7 @@ private:
     Ui::MainWindow *ui;
 
     //The objects for the fileindex functionality
-    NamesDB*                    _db = nullptr;
+    NamesDB<fs_entry>*          _db = nullptr;
     FS*                         _fs = nullptr;
     FileIndex*                  _index = nullptr;
     IndexThread*                _indexThread = nullptr;
@@ -50,7 +50,7 @@ private:
     QStringListModel*           _m_results;
     QStringList                 _sl_results;
 
-    QFutureWatcher<std::deque<namesDB_searchRes>> _searchWatcher;
+    QFutureWatcher<std::deque<namesDB_searchRes<fs_entry>>> _searchWatcher;
 
     stats_search                _search_stats;
 

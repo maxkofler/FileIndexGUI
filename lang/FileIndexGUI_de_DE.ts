@@ -94,7 +94,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="88"/>
+        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="87"/>
         <source>Select the file to import</source>
         <translation type="unfinished"></translation>
     </message>

@@ -1,7 +1,8 @@
+#include "log.h"
 #include "indexthread.h"
 
 IndexThread::IndexThread(FileIndex& index, const std::string& rootPath, bool recursive, const std::string& crateName, QObject *parent) : QThread{parent}, _index(index), _rootPath(rootPath), _crateName(crateName), _recursive(recursive){
-
+    FUN();
 }
 
 void IndexThread::indexFoundStatic(const std::string_view& name, size_t id, bool isDir, void* udata){
