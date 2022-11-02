@@ -1,8 +1,6 @@
 #ifndef INDEXDIALOG_H
 #define INDEXDIALOG_H
 
-//TODO: Investigate this
-#include "log.h"
 #include <QDialog>
 
 QT_BEGIN_NAMESPACE
