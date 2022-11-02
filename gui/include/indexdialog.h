@@ -1,7 +1,7 @@
 #ifndef INDEXDIALOG_H
 #define INDEXDIALOG_H
 
-#warning inspect
+//TODO: Investigate this
 #include "log.h"
 #include <QDialog>
 
@@ -14,7 +14,7 @@ class IndexDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit IndexDialog(QWidget *parent = nullptr);
+    explicit IndexDialog(QWidget *pareDEBUG_EXnt = nullptr);
 
     std::string                 getPath();
 
