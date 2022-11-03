@@ -19,8 +19,14 @@
 
 #include <QSettings>
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), _dialog(this){
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), _dialog(this), _dialog_settings(this){
     ui->setupUi(this);
+
+    QSettings s;
+
+    //Setup subdialogs
+    _dialog.setWindowModality(Qt::WindowModality::WindowModal);
+    _dialog_settings.setWindowModality(Qt::WindowModality::WindowModal);
 
     //Set up the results list
     _lv_results = ui->lv_results;
@@ -34,15 +40,37 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     _fs = new FS(_db);
     _index = new FileIndex(_fs);
 
-    //Connect signalsConvertWideToUtf8(
+    //Connect signals
     QObject::connect(ui->actionIndex, &QAction::triggered, this, &MainWindow::onNewIndex);
     QObject::connect(ui->actionExport, &QAction::triggered, this, &MainWindow::onActionExport);
     QObject::connect(ui->actionImport, &QAction::triggered, this, &MainWindow::onActionImport);
+    QObject::connect(ui->actionSettings, &QAction::triggered, &_dialog_settings, &QDialog::show);
 
     QObject::connect(&_dialog, &IndexDialog::finished, this, &MainWindow::onIndexDialogDone);
     QObject::connect(ui->le_search, &QLineEdit::textChanged, this, &MainWindow::onTeTextChanged);
     QObject::connect(this, &MainWindow::showNewStatusMessage, ui->statusbar, &QStatusBar::showMessage);
     QObject::connect(_lv_results, &QListView::doubleClicked, this, &MainWindow::onResultDoubleClicked);
+
+    //Import startup database
+    QString startupDB = s.value("startup/dbfile", "").toString();
+    if (startupDB != ""){
+        std::ifstream inFile;
+        std::string path = startupDB.toStdString();
+        inFile.open(path, std::ios::out | std::ios::binary);
+        if (!inFile.is_open()){
+            LOGUE("[MainWindow][import] Failed to open file " + path + " for reading");
+            return;
+        }
+
+        if (!_db->importDB(inFile)){
+            LOGUE("[MainWindow][import] Failed to import database");
+        }
+        _db->updateIndex();
+
+        inFile.close();
+
+        onTeTextChanged(ui->le_search->text());
+    }
 }
 
 MainWindow::~MainWindow(){
@@ -60,7 +88,7 @@ MainWindow::~MainWindow(){
 //
 
 void MainWindow::onNewIndex(){
-    _dialog.setWindowModality(Qt::WindowModality::WindowModal);
+
     _dialog.show();
 }
 

@@ -12,6 +12,7 @@
 #include <deque>
 
 #include "indexdialog.h"
+#include "settingsdialog.h"
 #include "indexthread.h"
 #include "stats.h"
 
@@ -55,6 +56,7 @@ private:
     stats_search                _search_stats;
 
     IndexDialog                 _dialog;
+    SettingsDialog              _dialog_settings;
 
 private slots:
     /**

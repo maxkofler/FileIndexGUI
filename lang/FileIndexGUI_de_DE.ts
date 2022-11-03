@@ -17,8 +17,8 @@
     <message>
         <location filename="../gui/ui/indexdialog.ui" line="14"/>
         <location filename="../build/ui/ui_indexdialog.h" line="92"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <source>Index</source>
+        <translation type="unfinished">Neues Dateisystem indizieren</translation>
     </message>
     <message>
         <location filename="../gui/ui/indexdialog.ui" line="48"/>
@@ -48,64 +48,76 @@
     <name>MainWindow</name>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="14"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="90"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="95"/>
         <source>FileIndexGUI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="37"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="103"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="112"/>
         <source>File</source>
         <translation type="unfinished">Datei</translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="49"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="91"/>
+        <location filename="../gui/ui/mainwindow.ui" line="51"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="96"/>
         <source>Index</source>
         <translation type="unfinished">Neues Dateisystem indizieren</translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="52"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="93"/>
+        <location filename="../gui/ui/mainwindow.ui" line="54"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="98"/>
         <source>Ctrl+I</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="60"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="95"/>
-        <source>Export</source>
+        <location filename="../gui/ui/mainwindow.ui" line="62"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="100"/>
+        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="63"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="97"/>
-        <source>Ctrl+Shift+E</source>
+        <location filename="../gui/ui/mainwindow.ui" line="65"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="102"/>
+        <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="68"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="99"/>
-        <source>Import</source>
+        <location filename="../gui/ui/mainwindow.ui" line="70"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="104"/>
+        <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="71"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="101"/>
-        <source>Ctrl+Shift+I</source>
+        <location filename="../gui/ui/mainwindow.ui" line="73"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="106"/>
+        <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="70"/>
+        <location filename="../gui/ui/mainwindow.ui" line="78"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="108"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/mainwindow.ui" line="81"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="110"/>
+        <source>Ctrl+,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="98"/>
         <source>Save FileIndex Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="70"/>
+        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="98"/>
         <source>FileIndex Database (*.fidb)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="89"/>
+        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="117"/>
         <source>Select the file to import</source>
         <translation type="unfinished"></translation>
     </message>
@@ -116,6 +128,38 @@
         <location filename="../gui/src/main.cpp" line="30"/>
         <source>Starting up...</source>
         <translation type="unfinished">Starte...</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog</name>
+    <message>
+        <location filename="../gui/ui/settingsdialog.ui" line="14"/>
+        <location filename="../build/ui/ui_settingsdialog.h" line="71"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/settingsdialog.ui" line="32"/>
+        <location filename="../build/ui/ui_settingsdialog.h" line="72"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/settingsdialog.ui" line="48"/>
+        <location filename="../build/ui/ui_settingsdialog.h" line="73"/>
+        <source>Startup Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/settingsdialog.ui" line="61"/>
+        <location filename="../build/ui/ui_settingsdialog.h" line="74"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/src/settingsdialog/settingsdialog.cpp" line="30"/>
+        <source>Select the database to load on startup</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

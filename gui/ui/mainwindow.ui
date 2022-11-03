@@ -40,6 +40,8 @@
     <addaction name="separator"/>
     <addaction name="actionExport"/>
     <addaction name="actionImport"/>
+    <addaction name="separator"/>
+    <addaction name="actionSettings"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -57,18 +59,26 @@
   </action>
   <action name="actionExport">
    <property name="text">
-    <string>Export</string>
+    <string>Save</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+E</string>
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionImport">
    <property name="text">
-    <string>Import</string>
+    <string>Open</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+I</string>
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+,</string>
    </property>
   </action>
  </widget>
