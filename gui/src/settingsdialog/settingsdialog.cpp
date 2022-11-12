@@ -11,10 +11,11 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::Se
 
     QSettings s;
     ui->le_startupdb_path->setText(s.value("startup/dbfile", "").toString());
+    ui->cb_matchCase->setChecked(s.value("search/matchCase", false).toBool());
 
     connect(ui->bt_startupdb_path, &QPushButton::clicked, this, &SettingsDialog::onSelectStartupDB);
 
-    connect(ui->bt_done, &QPushButton::clicked, this, &SettingsDialog::hide);
+    connect(ui->bt_done, &QPushButton::clicked, this, &SettingsDialog::accept);
 }
 
 SettingsDialog::~SettingsDialog(){
@@ -40,14 +41,15 @@ void SettingsDialog::onSelectStartupDB(){
     ui->le_startupdb_path->setText(QString::fromStdString(path));
 }
 
-void SettingsDialog::hide(){
+void SettingsDialog::accept(){
     FUN();
 
-    LOGU("[SettingsDialog][hide] Saving preferences...");
+    LOGU("[SettingsDialog][accept] Saving preferences...");
 
     QSettings s;
 
     s.setValue("startup/dbfile", ui->le_startupdb_path->text());
+    s.setValue("search/matchCase", ui->cb_matchCase->isChecked());
 
-    QDialog::hide();
+    QDialog::accept();
 }

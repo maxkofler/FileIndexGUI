@@ -21,7 +21,7 @@ private:
 
 private slots:
     void                        onSelectStartupDB();
-    void                        hide();
+    void                        accept();
 };
 
 #endif // SETTINGSDIALOG_H
