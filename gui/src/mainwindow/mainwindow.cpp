@@ -52,9 +52,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(_lv_results, &QListView::doubleClicked, this, &MainWindow::onResultDoubleClicked);
     QObject::connect(&_dialog_settings, &QDialog::accepted, this, &MainWindow::reloadSettings);
 
-    //Load MainWindow settings
-    reloadSettings();
-
     //Import startup database
     QString startupDB = s.value("startup/dbfile", "").toString();
     if (startupDB != ""){
@@ -75,6 +72,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
         onTeTextChanged(ui->le_search->text());
     }
+
+    //Load MainWindow settings
+    reloadSettings();
 }
 
 MainWindow::~MainWindow(){

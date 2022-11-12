@@ -25,18 +25,37 @@ int main(int argc, char *argv[]){
         s.setValue("test/testInt", s.value("test/testInt", 0).toInt()+1);
 
         QApplication a(argc, argv);
+        LOGU("[Main] Current applicatinoDirPath=" + a.applicationDirPath().toStdString());
 
         QTranslator translator;
         LOGU("[Main] " + QApplication::tr("Starting up...").toStdString());
-        const QStringList uiLanguages = QLocale::system().uiLanguages();
-        for (const QString &locale : uiLanguages) {
-            const QString baseName = "FileIndexGUI_" + QLocale(locale).name();
-            LOGI("[Main] Trying to load translation file " + baseName.toStdString() + "...");
-            if (translator.load(":/i18n/" + baseName)) {
+
+        QString overrideLang = s.value("startup/overrideLang", "").toString();
+        bool loadedOverrideLang = false;
+        if (overrideLang != ""){
+            if (translator.load("FileIndexGUI_" + overrideLang)){
                 a.installTranslator(&translator);
-                break;
+                LOGU("[Main] OVERRIDE Language file " + overrideLang.toStdString() + " loaded");
+                loadedOverrideLang = true;
+            } else {
+                LOGU("[Main] Failed to load override language file " + overrideLang.toStdString() + ", falling back to system language");
             }
         }
+
+        if (!loadedOverrideLang){
+            const QStringList uiLanguages = QLocale::system().uiLanguages();
+            for (const QString &locale : uiLanguages) {
+                const QString baseName = "FileIndexGUI_" + QLocale(locale).name() + "";
+                if (translator.load(baseName, a.applicationDirPath())) {
+                    LOGU("[Main] Loaded language file " + baseName.toStdString());
+                    a.installTranslator(&translator);
+                    break;
+                } else
+                    LOGU("[Main] Failed to load language file " + baseName.toStdString());
+            }
+        }
+
+
         MainWindow w;
 
         w.show();
