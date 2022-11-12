@@ -50,6 +50,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(ui->le_search, &QLineEdit::textChanged, this, &MainWindow::onTeTextChanged);
     QObject::connect(this, &MainWindow::showNewStatusMessage, ui->statusbar, &QStatusBar::showMessage);
     QObject::connect(_lv_results, &QListView::doubleClicked, this, &MainWindow::onResultDoubleClicked);
+    QObject::connect(&_dialog_settings, &QDialog::accepted, this, &MainWindow::reloadSettings);
+
+    //Load MainWindow settings
+    reloadSettings();
 
     //Import startup database
     QString startupDB = s.value("startup/dbfile", "").toString();
@@ -213,7 +217,7 @@ void MainWindow::onTeTextChanged(const QString& text){
 
     QFuture<std::deque<namesDB_searchRes<fs_entry>>> threadRes = QtConcurrent::run([=]() {
         auto start = std::chrono::high_resolution_clock::now();
-        auto searchRes = _db->searchAll(text.toStdString(), false);
+        auto searchRes = _db->searchAll(text.toStdString(), false, _search_matchCase);
         auto stop = std::chrono::high_resolution_clock::now();
         auto dur = std::chrono::duration_cast<std::chrono::microseconds>(stop-start);
         _search_stats.us_search = dur.count();
@@ -236,4 +240,16 @@ void MainWindow::onTeTextChanged(const QString& text){
 void MainWindow::onResultDoubleClicked(const QModelIndex& index){
     QVariant res = _m_results->data(index);
     std::cout << "Double clicked " << res.toString().toStdString() << std::endl;
+}
+
+void MainWindow::reloadSettings(){
+    FUN();
+
+    LOGU("[MainWindow] Reloading settings...");
+
+    QSettings s;
+
+    _search_matchCase = s.value("search/matchCase", false).toBool();
+
+    onTeTextChanged(ui->le_search->text());
 }

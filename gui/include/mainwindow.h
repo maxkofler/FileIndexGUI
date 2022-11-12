@@ -58,6 +58,11 @@ private:
     IndexDialog                 _dialog;
     SettingsDialog              _dialog_settings;
 
+    /**
+     * @brief   If the search should match the cases
+     */
+    bool                        _search_matchCase = false;
+
 private slots:
     /**
      * @brief   Gets called a new index should be added
@@ -108,6 +113,13 @@ private slots:
      * @param   index           The position the user clicked
      */
     void                        onResultDoubleClicked(const QModelIndex& index);
+
+public slots:
+
+    /**
+     * @brief   Urges the mainwindow to reload its settings
+     */
+    void                        reloadSettings();
 
 };
 #endif // MAINWINDOW_H
