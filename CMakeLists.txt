@@ -56,7 +56,12 @@ set_target_properties(FileIndexGUI PROPERTIES
 
 install(TARGETS FileIndexGUI
     BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+install(FILES ${QM_FILES}
+    DESTINATION ${CMAKE_INSTALL_DIR}/qm
+)
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(FileIndexGUI)
