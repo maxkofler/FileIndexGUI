@@ -11,6 +11,7 @@
 
 #include <deque>
 
+#include "fstypes.h"
 #include "indexdialog.h"
 #include "settingsdialog.h"
 #include "indexthread.h"
@@ -40,7 +41,7 @@ private:
     Ui::MainWindow *ui;
 
     //The objects for the fileindex functionality
-    NamesDB<fs_entry>*          _db = nullptr;
+    SQL*                        _sql = nullptr;
     FS*                         _fs = nullptr;
     FileIndex*                  _index = nullptr;
     IndexThread*                _indexThread = nullptr;
@@ -51,7 +52,7 @@ private:
     QStringListModel*           _m_results;
     QStringList                 _sl_results;
 
-    QFutureWatcher<std::deque<namesDB_searchRes<fs_entry>>> _searchWatcher;
+    QFutureWatcher<std::deque<fs_entry>> _searchWatcher;
 
     stats_search                _search_stats;
 
@@ -82,10 +83,9 @@ private slots:
     /**
      * @brief   Tells the main window a new fs entry has been found, updates the status bar
      * @param   path            The path of the entry
-     * @param   id              The id of the entry
      * @param   isDir           If it is a directory
      */
-    void                        onIndexFound(const QString& path, size_t id, bool isDir);
+    void                        onIndexFound(const QString& path, bool isDir);
 
     /**
      * @brief   Gets called once the indexing dialog is done

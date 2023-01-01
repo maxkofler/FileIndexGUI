@@ -36,8 +36,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     _lv_results->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     //Create the filesystem and index
-    _db = new NamesDB<fs_entry>("FS-Main");
-    _fs = new FS(_db);
+    _sql = new SQL("fs.sql");
+    _fs = new FS(*_sql);
     _index = new FileIndex(_fs);
 
     //Connect signals
@@ -63,11 +63,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             return;
         }
 
-        if (!_db->importDB(inFile)){
-            LOGUE("[MainWindow][import] Failed to import database");
-        }
-        _db->updateIndex();
-
         inFile.close();
 
         onTeTextChanged(ui->le_search->text());
@@ -84,7 +79,6 @@ MainWindow::~MainWindow(){
 
     delete _index;
     delete _fs;
-    delete _db;
 }
 
 //
@@ -110,8 +104,6 @@ void MainWindow::onActionExport(){
         return;
     }
 
-    _db->exportDB(outFile);
-
     outFile.close();
 }
 
@@ -135,12 +127,6 @@ void MainWindow::onActionImport(){
         return;
     }
 
-    _db->clean();
-    if (!_db->importDB(inFile)){
-        LOGUE("[MainWindow][import] Failed to import database");
-    }
-    _db->updateIndex();
-
     inFile.close();
 
     onTeTextChanged(ui->le_search->text());
@@ -160,7 +146,7 @@ void MainWindow::onIndexDialogDone(int){
     ui->le_search->setDisabled(true);
 }
 
-void MainWindow::onIndexFound(const QString& name, size_t id, bool isDir){
+void MainWindow::onIndexFound(const QString& name, bool isDir){
     emit showNewStatusMessage(name);
 }
 
@@ -168,7 +154,6 @@ void MainWindow::onIndexDone(){
     QObject::disconnect(_c_indexThread);
     delete _indexThread;
     emit showNewStatusMessage("Done!");
-    _db->updateIndex();
     LOGU("[MainWindow][onIndexDone] Finished indexing");
     onTeTextChanged("");
     ui->le_search->setDisabled(false);
@@ -201,31 +186,29 @@ void MainWindow::onSearchDone(){
 
 
     _sl_results.clear();
-    namesDB_searchRes<fs_entry> res;
     std::string name;
+    fs_entry res;
     for (size_t i = 0; i < searchRes.size() && i < 1000; i++){
         res = searchRes.at(i);
-        name = _fs->getEntryPathString(res.id);
-        if (res.data->isDir)
+        name = _fs->getPathString(res);
+        if (res.isDir)
             name += "/";
-        _sl_results.append(QString().fromStdString(name));
+        _sl_results.append(QString().fromUtf8(name));
     }
     _m_results->setStringList(_sl_results);
 }
 
 void MainWindow::onTeTextChanged(const QString& text){
 
-    QFuture<std::deque<namesDB_searchRes<fs_entry>>> threadRes = QtConcurrent::run([=]() {
+    QFuture<std::deque<fs_entry>> threadRes = QtConcurrent::run([=]() {
         auto start = std::chrono::high_resolution_clock::now();
-        auto searchRes = _db->searchAll(text.toStdString(), false, _search_matchCase);
+        std::deque<fs_entry> searchRes = _fs->search(text.toStdString(), _search_matchCase);
         auto stop = std::chrono::high_resolution_clock::now();
         auto dur = std::chrono::duration_cast<std::chrono::microseconds>(stop-start);
         _search_stats.us_search = dur.count();
 
         start = std::chrono::high_resolution_clock::now();
-        std::sort(searchRes.begin(), searchRes.end(), [](const namesDB_searchRes<fs_entry> &a, const namesDB_searchRes<fs_entry> &b) -> bool {
-            return a.matchRemaining < b.matchRemaining;
-        });
+        //TODO: Remove this
         stop = std::chrono::high_resolution_clock::now();
         dur = std::chrono::duration_cast<std::chrono::microseconds>(stop-start);
         _search_stats.us_sort = dur.count();
@@ -233,7 +216,7 @@ void MainWindow::onTeTextChanged(const QString& text){
         return searchRes;
     });
 
-    QObject::connect(&_searchWatcher, &QFutureWatcher<std::deque<namesDB_searchRes<fs_entry>>>::finished, this, &MainWindow::onSearchDone);
+    QObject::connect(&_searchWatcher, &QFutureWatcher<std::deque<fs_entry>>::finished, this, &MainWindow::onSearchDone);
     _searchWatcher.setFuture(threadRes);
 }
 
