@@ -15,6 +15,7 @@
 #include "indexdialog.h"
 #include "settingsdialog.h"
 #include "indexthread.h"
+#include "searchmanager.h"
 #include "stats.h"
 
 QT_BEGIN_NAMESPACE
@@ -58,6 +59,9 @@ private:
 
     IndexDialog                 _dialog;
     SettingsDialog              _dialog_settings;
+    SearchManager*              _searchManager;
+
+    std::deque<std::string>     _searchQueue;
 
     /**
      * @brief   If the search should match the cases
@@ -107,6 +111,14 @@ private slots:
      * @param   text            The new text in the bar
      */
     void                        onTeTextChanged(const QString& text);
+
+    /**
+     * @brief   Gets called from the searchManager once a result is incoming
+     * @param   searchTerm      The string searched for
+     * @param   res             A std::deque containing the fs_entry's found
+     * @param   us_searched     The us needed for finding the results
+     */
+    void                        onSearchResult(std::string searchTerm, std::deque<fs_entry> res, uint64_t us_searched);
 
     /**
      * @brief   Gets called every time the user double-clicked a result

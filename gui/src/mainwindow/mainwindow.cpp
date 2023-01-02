@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     _sql = new SQL("fs.sql");
     _fs = new FS(*_sql);
     _index = new FileIndex(_fs);
+    _searchManager = new SearchManager(*_fs);
 
     //Connect signals
     QObject::connect(ui->actionIndex, &QAction::triggered, this, &MainWindow::onNewIndex);
@@ -51,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(this, &MainWindow::showNewStatusMessage, ui->statusbar, &QStatusBar::showMessage);
     QObject::connect(_lv_results, &QListView::doubleClicked, this, &MainWindow::onResultDoubleClicked);
     QObject::connect(&_dialog_settings, &QDialog::accepted, this, &MainWindow::reloadSettings);
+
+    QObject::connect(_searchManager, &SearchManager::resultReady, this, &MainWindow::onSearchResult, Qt::QueuedConnection);
 
     //Import startup database
     QString startupDB = s.value("startup/dbfile", "").toString();
@@ -77,8 +80,10 @@ MainWindow::~MainWindow(){
 
     delete _m_results;
 
+    delete _searchManager;
     delete _index;
     delete _fs;
+    delete _sql;
 }
 
 //
@@ -160,9 +165,21 @@ void MainWindow::onIndexDone(){
 }
 
 void MainWindow::onSearchDone(){
-    auto searchRes = _searchWatcher.future().result();
 
-    if (searchRes.size() == 0){
+}
+
+void MainWindow::onTeTextChanged(const QString& text){
+
+    //Order a new search action
+    _searchManager->search(text.toStdString(), _search_matchCase);
+}
+
+void MainWindow::onSearchResult(std::string searchTerm, std::deque<fs_entry> res, uint64_t us_searched){
+    FUN();
+
+    LOGU("[MainWindow][onSearchResult] Got " + std::to_string(res.size()) + " results from search term '" + searchTerm + "'");
+
+    if (res.size() == 0){
         emit showNewStatusMessage(QString().fromStdString("No matches!"));
         _sl_results.clear();
         _m_results->setStringList(_sl_results);
@@ -171,14 +188,14 @@ void MainWindow::onSearchDone(){
 
     {
         std::string logMsg;
-        if (searchRes.size() > 1000){
-            logMsg = "Showing 1000 of " + std::to_string(searchRes.size()) + " results";
+        if (res.size() > 1000){
+            logMsg = "Showing 1000 of " + std::to_string(res.size()) + " results";
 
         } else {
-            logMsg = "Showing " + std::to_string(searchRes.size()) + " results";
+            logMsg = "Showing " + std::to_string(res.size()) + " results";
         }
 
-        logMsg += ", searching took " + std::to_string(_search_stats.us_search) + " us";
+        logMsg += ", searching took " + std::to_string(us_searched) + " us";
         logMsg += ", sorting took " + std::to_string(_search_stats.us_sort) + " us";
 
         emit showNewStatusMessage(QString().fromStdString(logMsg));
@@ -187,37 +204,15 @@ void MainWindow::onSearchDone(){
 
     _sl_results.clear();
     std::string name;
-    fs_entry res;
-    for (size_t i = 0; i < searchRes.size() && i < 1000; i++){
-        res = searchRes.at(i);
-        name = _fs->getPathString(res);
-        if (res.isDir)
+    fs_entry fs_res;
+    for (size_t i = 0; i < res.size() && i < 1000; i++){
+        fs_res = res.at(i);
+        name = _fs->getPathString(fs_res);
+        if (fs_res.isDir)
             name += "/";
         _sl_results.append(QString().fromUtf8(name));
     }
     _m_results->setStringList(_sl_results);
-}
-
-void MainWindow::onTeTextChanged(const QString& text){
-
-    QFuture<std::deque<fs_entry>> threadRes = QtConcurrent::run([=]() {
-        auto start = std::chrono::high_resolution_clock::now();
-        std::deque<fs_entry> searchRes = _fs->search(text.toStdString(), _search_matchCase);
-        auto stop = std::chrono::high_resolution_clock::now();
-        auto dur = std::chrono::duration_cast<std::chrono::microseconds>(stop-start);
-        _search_stats.us_search = dur.count();
-
-        start = std::chrono::high_resolution_clock::now();
-        //TODO: Remove this
-        stop = std::chrono::high_resolution_clock::now();
-        dur = std::chrono::duration_cast<std::chrono::microseconds>(stop-start);
-        _search_stats.us_sort = dur.count();
-
-        return searchRes;
-    });
-
-    QObject::connect(&_searchWatcher, &QFutureWatcher<std::deque<fs_entry>>::finished, this, &MainWindow::onSearchDone);
-    _searchWatcher.setFuture(threadRes);
 }
 
 void MainWindow::onResultDoubleClicked(const QModelIndex& index){
