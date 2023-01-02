@@ -19,7 +19,19 @@
 
 #include <QSettings>
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), _dialog(this), _dialog_settings(this){
+MainWindow::MainWindow(QWidget *parent) :
+  QMainWindow(parent),
+  ui(new Ui::MainWindow),
+  _dialog(this),
+  _dialog_settings(this),
+  _sql(),
+  _fs(_sql),
+  _index(&_fs),
+  _searchManager(_fs)
+
+{
+
+    FUN();
     ui->setupUi(this);
 
     QSettings s;
@@ -35,12 +47,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     _lv_results->setModel(_m_results);
     _lv_results->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    //Create the filesystem and index
-    _sql = new SQL("fs.sql");
-    _fs = new FS(*_sql);
-    _index = new FileIndex(_fs);
-    _searchManager = new SearchManager(*_fs);
-
     //Connect signals
     QObject::connect(ui->actionIndex, &QAction::triggered, this, &MainWindow::onNewIndex);
     QObject::connect(ui->actionExport, &QAction::triggered, this, &MainWindow::onActionExport);
@@ -53,37 +59,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(_lv_results, &QListView::doubleClicked, this, &MainWindow::onResultDoubleClicked);
     QObject::connect(&_dialog_settings, &QDialog::accepted, this, &MainWindow::reloadSettings);
 
-    QObject::connect(_searchManager, &SearchManager::resultReady, this, &MainWindow::onSearchResult, Qt::QueuedConnection);
+    QObject::connect(&_searchManager, &SearchManager::resultReady, this, &MainWindow::onSearchResult, Qt::QueuedConnection);
 
     //Import startup database
     QString startupDB = s.value("startup/dbfile", "").toString();
     if (startupDB != ""){
-        std::ifstream inFile;
-        std::string path = startupDB.toStdString();
-        inFile.open(path, std::ios::out | std::ios::binary);
-        if (!inFile.is_open()){
-            LOGUE("[MainWindow][import] Failed to open file " + path + " for reading");
-            return;
-        }
-
-        inFile.close();
-
-        onTeTextChanged(ui->le_search->text());
+        _sql.load(startupDB.toStdString());
+        _fs.createTables();
     }
+
+    //Update the contents
+    onTeTextChanged(ui->le_search->text());
 
     //Load MainWindow settings
     reloadSettings();
 }
 
 MainWindow::~MainWindow(){
+    FUN();
+
     delete ui;
 
     delete _m_results;
-
-    delete _searchManager;
-    delete _index;
-    delete _fs;
-    delete _sql;
 }
 
 //
@@ -91,29 +88,27 @@ MainWindow::~MainWindow(){
 //
 
 void MainWindow::onNewIndex(){
+    FUN();
 
     _dialog.show();
 }
 
 void MainWindow::onActionExport(){
     FUN();
+
     LOGU("[MainWindow][export]");
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save FileIndex Database"), "db.fidb", tr("FileIndex Database (*.fidb)"));
     std::string path = fileName.toStdString();
     LOGU("[MainWindow][export] Saving database to " + path);
 
-    std::ofstream outFile;
-    outFile.open(path, std::ios::out | std::ios::binary);
-    if (!outFile.is_open()){
+    if (!_sql.save(path))
         LOGUE("[MainWindow][export] Failed to open file " + path + " for writing");
-        return;
-    }
 
-    outFile.close();
 }
 
 void MainWindow::onActionImport(){
     FUN();
+
     LOGU("[MainWindow][import]");
     QFileDialog fDialog(this, tr("Select the file to import"));
     fDialog.setFileMode(QFileDialog::ExistingFile);
@@ -125,14 +120,10 @@ void MainWindow::onActionImport(){
     std::string path = fDialog.selectedFiles().at(0).toStdString();
     LOGU("[MainWindow][importing] Importing database from " + path);
 
-    std::ifstream inFile;
-    inFile.open(path, std::ios::out | std::ios::binary);
-    if (!inFile.is_open()){
+    if (!_sql.load(path))
         LOGUE("[MainWindow][import] Failed to open file " + path + " for reading");
-        return;
-    }
 
-    inFile.close();
+    _fs.createTables();
 
     onTeTextChanged(ui->le_search->text());
 }
@@ -143,7 +134,7 @@ void MainWindow::onIndexDialogDone(int){
     std::string path = _dialog.getPath();
     std::string crate = _dialog.getCrate();
     LOGU("[MainWindow][onIndexDialogDone] Indexing " + path + "...");
-    _indexThread = new IndexThread(*_index, path, true, crate);
+    _indexThread = new IndexThread(_index, path, true, crate);
     _c_indexThread = QObject::connect(_indexThread, &IndexThread::indexFound, this, &MainWindow::onIndexFound, Qt::QueuedConnection);
     QObject::connect(_indexThread, &IndexThread::done, this, &MainWindow::onIndexDone, Qt::QueuedConnection);
 
@@ -152,10 +143,14 @@ void MainWindow::onIndexDialogDone(int){
 }
 
 void MainWindow::onIndexFound(const QString& name, bool isDir){
+    FUN();
+
     emit showNewStatusMessage(name);
 }
 
 void MainWindow::onIndexDone(){
+    FUN();
+
     QObject::disconnect(_c_indexThread);
     delete _indexThread;
     emit showNewStatusMessage("Done!");
@@ -165,9 +160,10 @@ void MainWindow::onIndexDone(){
 }
 
 void MainWindow::onTeTextChanged(const QString& text){
+    FUN();
 
     //Order a new search action
-    _searchManager->search(text.toStdString(), _search_matchCase);
+    _searchManager.search(text.toStdString(), _search_matchCase);
 }
 
 void MainWindow::onSearchResult(std::string searchTerm, std::deque<fs_entry> res, uint64_t us_searched){
@@ -203,7 +199,7 @@ void MainWindow::onSearchResult(std::string searchTerm, std::deque<fs_entry> res
     fs_entry fs_res;
     for (size_t i = 0; i < res.size() && i < 1000; i++){
         fs_res = res.at(i);
-        name = _fs->getPathString(fs_res);
+        name = _fs.getPathString(fs_res);
         if (fs_res.isDir)
             name += "/";
         _sl_results.append(QString().fromUtf8(name));
@@ -212,6 +208,8 @@ void MainWindow::onSearchResult(std::string searchTerm, std::deque<fs_entry> res
 }
 
 void MainWindow::onResultDoubleClicked(const QModelIndex& index){
+    FUN();
+
     QVariant res = _m_results->data(index);
     std::cout << "Double clicked " << res.toString().toStdString() << std::endl;
 }

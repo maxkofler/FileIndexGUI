@@ -41,10 +41,15 @@ signals:
 private:
     Ui::MainWindow *ui;
 
+    SQL                         _sql;
+    FS                          _fs;
+    FileIndex                   _index;
+    SearchManager               _searchManager;
+
     //The objects for the fileindex functionality
-    SQL*                        _sql = nullptr;
-    FS*                         _fs = nullptr;
-    FileIndex*                  _index = nullptr;
+    //SQL*                        _sql = nullptr;
+    //FS*                         _fs = nullptr;
+    //FileIndex*                  _index = nullptr;
     IndexThread*                _indexThread = nullptr;
     QMetaObject::Connection     _c_indexThread;
 
@@ -59,9 +64,6 @@ private:
 
     IndexDialog                 _dialog;
     SettingsDialog              _dialog_settings;
-    SearchManager*              _searchManager;
-
-    std::deque<std::string>     _searchQueue;
 
     /**
      * @brief   If the search should match the cases
