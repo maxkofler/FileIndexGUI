@@ -164,10 +164,6 @@ void MainWindow::onIndexDone(){
     ui->le_search->setDisabled(false);
 }
 
-void MainWindow::onSearchDone(){
-
-}
-
 void MainWindow::onTeTextChanged(const QString& text){
 
     //Order a new search action

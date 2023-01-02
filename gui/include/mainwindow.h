@@ -102,11 +102,6 @@ private slots:
     void                        onIndexDone();
 
     /**
-     * @brief   Notifies this class that the searching process is done
-     */
-    void                        onSearchDone();
-
-    /**
      * @brief   If the text in the search bar has changed, triggers a new search
      * @param   text            The new text in the bar
      */
