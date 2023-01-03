@@ -3,6 +3,7 @@
 
 #include <QThread>
 #include <mutex>
+#include <semaphore>
 #include <deque>
 #include <chrono>
 
@@ -48,9 +49,9 @@ private:
     FS&                         _fs;
 
     /**
-     * @brief   A mutex that prevents the eventloop from proceeding
+     * @brief   A semaphore that prevents the eventloop from proceeding
      */
-    std::mutex                  _m_run;
+    std::binary_semaphore       _s_run{0};
 
     /**
      * @brief   The queue of search requests

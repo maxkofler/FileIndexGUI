@@ -12,7 +12,7 @@ SearchManager::~SearchManager(){
 
     //Turn off running mode and unlock the eventloop
     this->_run = false;
-    this->_m_run.unlock();
+    this->_s_run.release();
 
     //Wait max 1000ms for the run() function to exit
     bool joined = this->wait(1000);
@@ -25,13 +25,13 @@ void SearchManager::run(){
 	FUN();
 
 	//Try locking the run mutex to assure the eventloop gets blocked immediately
-	_m_run.try_lock();
+    _s_run.try_acquire();
 
 	_run = true;
 	while(_run){
 
 		//Try to lock the run mutex, this halts this thread
-		_m_run.lock();
+        _s_run.acquire();
         LOGD("[SearchManager][run] Waking up...");
 
 		bool workToDo = true;
@@ -75,5 +75,5 @@ void SearchManager::search(std::string search, bool matchCase){
 	_m_searchQueue.unlock();
 
 	//Unlock the eventloop, even if it is already running, this triggers at least one rerun
-	_m_run.unlock();
+    _s_run.release();
 }
