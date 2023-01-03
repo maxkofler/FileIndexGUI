@@ -5,12 +5,12 @@ IndexThread::IndexThread(FileIndex& index, const std::string& rootPath, bool rec
     FUN();
 }
 
-void IndexThread::indexFoundStatic(const std::string_view& name, size_t id, bool isDir, void* udata){
-    ((IndexThread*)(udata))->indexFoundSlot(name, id, isDir);
+void IndexThread::indexFoundStatic(const std::string_view& name, bool isDir, void* udata){
+    ((IndexThread*)(udata))->indexFoundSlot(name, isDir);
 }
 
-void IndexThread::indexFoundSlot(const std::string_view& name, size_t id, bool isDir){
-    emit indexFound(QString().fromStdString(std::string(name)), id, isDir);
+void IndexThread::indexFoundSlot(const std::string_view& name, bool isDir){
+    emit indexFound(QString().fromStdString(std::string(name)), isDir);
 }
 
 void IndexThread::run(){

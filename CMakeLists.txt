@@ -8,10 +8,10 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(LOG_MAXLEVEL 10 CACHE STRING "Set the maximum log level")
+set(LOG_MAXLEVEL 20 CACHE STRING "Set the maximum log level")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
@@ -24,9 +24,6 @@ file(GLOB_RECURSE UI_SOURCES "gui/ui/**.ui")
 
 add_subdirectory(FileIndex/Log)
 include_directories(FileIndex/Log/include)
-
-add_subdirectory(FileIndex/NamesDB)
-include_directories(FileIndex/NamesDB/include)
 
 add_subdirectory(FileIndex/fileindex)
 include_directories(FileIndex/fileindex/include)
@@ -57,11 +54,19 @@ set_target_properties(FileIndexGUI PROPERTIES
 install(TARGETS FileIndexGUI
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 install(FILES ${QM_FILES}
-    DESTINATION ${CMAKE_INSTALL_DIR}/qm
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+qt_generate_deploy_app_script(
+    TARGET FileIndexGUI
+    FILENAME_VARIABLE deploy_script
+    NO_UNSUPPORTED_PLATFORM_ERROR
+)
+install(SCRIPT ${deploy_script})
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(FileIndexGUI)

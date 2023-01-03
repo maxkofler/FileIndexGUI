@@ -9,8 +9,15 @@
 #include <QStandardPaths>
 #include <QDir>
 
+#include <fstream>
+
 int main(int argc, char *argv[]){
     hlog = new Log::Log(Log::D);
+
+    std::ofstream* traceFile = new std::ofstream("trace.json");
+    hlog->setFeature(Log::FEATURE_PROFILE, true);
+    hlog->setProfileStream(traceFile);
+
     int res = 0;
     {
         FUN();
@@ -63,6 +70,7 @@ int main(int argc, char *argv[]){
     }
 
     delete hlog;
+    delete traceFile;
 
     return res;
 }

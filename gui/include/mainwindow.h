@@ -11,9 +11,11 @@
 
 #include <deque>
 
+#include "fstypes.h"
 #include "indexdialog.h"
 #include "settingsdialog.h"
 #include "indexthread.h"
+#include "searchmanager.h"
 #include "stats.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,10 +41,15 @@ signals:
 private:
     Ui::MainWindow *ui;
 
+    SQL                         _sql;
+    FS                          _fs;
+    FileIndex                   _index;
+    SearchManager               _searchManager;
+
     //The objects for the fileindex functionality
-    NamesDB<fs_entry>*          _db = nullptr;
-    FS*                         _fs = nullptr;
-    FileIndex*                  _index = nullptr;
+    //SQL*                        _sql = nullptr;
+    //FS*                         _fs = nullptr;
+    //FileIndex*                  _index = nullptr;
     IndexThread*                _indexThread = nullptr;
     QMetaObject::Connection     _c_indexThread;
 
@@ -51,7 +58,7 @@ private:
     QStringListModel*           _m_results;
     QStringList                 _sl_results;
 
-    QFutureWatcher<std::deque<namesDB_searchRes<fs_entry>>> _searchWatcher;
+    QFutureWatcher<std::deque<fs_entry>> _searchWatcher;
 
     stats_search                _search_stats;
 
@@ -82,10 +89,9 @@ private slots:
     /**
      * @brief   Tells the main window a new fs entry has been found, updates the status bar
      * @param   path            The path of the entry
-     * @param   id              The id of the entry
      * @param   isDir           If it is a directory
      */
-    void                        onIndexFound(const QString& path, size_t id, bool isDir);
+    void                        onIndexFound(const QString& path, bool isDir);
 
     /**
      * @brief   Gets called once the indexing dialog is done
@@ -98,15 +104,18 @@ private slots:
     void                        onIndexDone();
 
     /**
-     * @brief   Notifies this class that the searching process is done
-     */
-    void                        onSearchDone();
-
-    /**
      * @brief   If the text in the search bar has changed, triggers a new search
      * @param   text            The new text in the bar
      */
     void                        onTeTextChanged(const QString& text);
+
+    /**
+     * @brief   Gets called from the searchManager once a result is incoming
+     * @param   searchTerm      The string searched for
+     * @param   res             A std::deque containing the fs_entry's found
+     * @param   us_searched     The us needed for finding the results
+     */
+    void                        onSearchResult(std::string searchTerm, std::deque<fs_entry> res, uint64_t us_searched);
 
     /**
      * @brief   Gets called every time the user double-clicked a result
