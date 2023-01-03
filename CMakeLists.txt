@@ -54,11 +54,19 @@ set_target_properties(FileIndexGUI PROPERTIES
 install(TARGETS FileIndexGUI
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-install(FILES ${QM_FILES}
-    DESTINATION ${CMAKE_INSTALL_DIR}/qm
+#install(FILES ${QM_FILES}
+#    DESTINATION ${CMAKE_INSTALL_BINDIR}../
+#)
+
+qt_generate_deploy_app_script(
+    TARGET FileIndexGUI
+    FILENAME_VARIABLE deploy_script
+    NO_UNSUPPORTED_PLATFORM_ERROR
 )
+install(SCRIPT ${deploy_script})
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(FileIndexGUI)
