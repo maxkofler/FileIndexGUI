@@ -57,9 +57,9 @@ install(TARGETS FileIndexGUI
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-#install(FILES ${QM_FILES}
-#    DESTINATION ${CMAKE_INSTALL_BINDIR}../
-#)
+install(FILES ${QM_FILES}
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
 
 qt_generate_deploy_app_script(
     TARGET FileIndexGUI
