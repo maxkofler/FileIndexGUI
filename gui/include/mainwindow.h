@@ -5,9 +5,7 @@
 #include <QThread>
 #include <QProgressDialog>
 #include <QListView>
-#include <QStringList>
-#include <QStringListModel>
-#include <QFutureWatcher>
+#include <QTreeView>
 
 #include <deque>
 
@@ -17,6 +15,7 @@
 #include "indexthread.h"
 #include "searchmanager.h"
 #include "stats.h"
+#include "fstreemodel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -47,18 +46,12 @@ private:
     SearchManager               _searchManager;
 
     //The objects for the fileindex functionality
-    //SQL*                        _sql = nullptr;
-    //FS*                         _fs = nullptr;
-    //FileIndex*                  _index = nullptr;
     IndexThread*                _indexThread = nullptr;
     QMetaObject::Connection     _c_indexThread;
 
     //Objects for results list
-    QListView*                  _lv_results = nullptr;
-    QStringListModel*           _m_results;
-    QStringList                 _sl_results;
-
-    QFutureWatcher<std::deque<fs_entry>> _searchWatcher;
+    QTreeView*                  _tv_results = nullptr;
+    FSTreeModel                 _m_results;
 
     stats_search                _search_stats;
 

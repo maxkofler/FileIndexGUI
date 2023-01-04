@@ -19,7 +19,7 @@
      <widget class="QLineEdit" name="le_search"/>
     </item>
     <item row="1" column="0">
-     <widget class="QListView" name="lv_results"/>
+     <widget class="QTreeView" name="tv_results"/>
     </item>
    </layout>
   </widget>

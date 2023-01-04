@@ -28,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent) :
   _fs(_sql),
   _index(&_fs),
   _searchManager(_fs)
-
 {
 
     FUN();
@@ -40,12 +39,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _dialog.setWindowModality(Qt::WindowModality::WindowModal);
     _dialog_settings.setWindowModality(Qt::WindowModality::WindowModal);
 
-    //Set up the results list
-    _lv_results = ui->lv_results;
-    _m_results = new QStringListModel(this);
-    _m_results->setStringList(_sl_results);
-    _lv_results->setModel(_m_results);
-    _lv_results->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //Set up the results tree
+    _tv_results = ui->tv_results;
+    _tv_results->setModel(&_m_results);
 
     //Connect signals
     QObject::connect(ui->actionIndex, &QAction::triggered, this, &MainWindow::onNewIndex);
@@ -56,7 +52,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(&_dialog, &IndexDialog::finished, this, &MainWindow::onIndexDialogDone);
     QObject::connect(ui->le_search, &QLineEdit::textChanged, this, &MainWindow::onTeTextChanged);
     QObject::connect(this, &MainWindow::showNewStatusMessage, ui->statusbar, &QStatusBar::showMessage);
-    QObject::connect(_lv_results, &QListView::doubleClicked, this, &MainWindow::onResultDoubleClicked);
     QObject::connect(&_dialog_settings, &QDialog::accepted, this, &MainWindow::reloadSettings);
 
     QObject::connect(&_searchManager, &SearchManager::resultReady, this, &MainWindow::onSearchResult, Qt::QueuedConnection);
@@ -79,8 +74,6 @@ MainWindow::~MainWindow(){
     FUN();
 
     delete ui;
-
-    delete _m_results;
 }
 
 //
@@ -194,17 +187,7 @@ void MainWindow::onSearchResult(std::string searchTerm, std::deque<fs_entry> res
     }
 
 
-    _sl_results.clear();
-    std::string name;
-    fs_entry fs_res;
-    for (size_t i = 0; i < res.size() && i < 1000; i++){
-        fs_res = res.at(i);
-        name = _fs.getPathString(fs_res);
-        if (fs_res.isDir)
-            name += "/";
-        _sl_results.append(QString().fromUtf8(name));
-    }
-    _m_results->setStringList(_sl_results);
+    _m_results.setRoot(res);
 }
 
 void MainWindow::onResultDoubleClicked(const QModelIndex& index){
