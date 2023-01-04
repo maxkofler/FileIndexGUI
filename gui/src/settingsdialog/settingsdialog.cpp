@@ -12,6 +12,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::Se
     QSettings s;
     ui->le_startupdb_path->setText(s.value("startup/dbfile", "").toString());
     ui->cb_matchCase->setChecked(s.value("search/matchCase", false).toBool());
+    ui->cb_autoExpand->setChecked(s.value("search/autoExpand", true).toBool());
 
     connect(ui->bt_startupdb_path, &QPushButton::clicked, this, &SettingsDialog::onSelectStartupDB);
 
@@ -50,6 +51,7 @@ void SettingsDialog::accept(){
 
     s.setValue("startup/dbfile", ui->le_startupdb_path->text());
     s.setValue("search/matchCase", ui->cb_matchCase->isChecked());
+    s.setValue("search/autoExpand", ui->cb_autoExpand->isChecked());
 
     QDialog::accept();
 }
