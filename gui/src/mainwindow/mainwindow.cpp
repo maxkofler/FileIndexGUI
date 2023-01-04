@@ -186,6 +186,8 @@ void MainWindow::onSearchResult(std::string searchTerm, FSDir res, uint64_t us_s
     }*/
 
     _m_results.setRoot(res);
+    if (searchTerm != "")
+        _tv_results->expandAll();
 }
 
 void MainWindow::onResultDoubleClicked(const QModelIndex& index){
