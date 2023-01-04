@@ -63,6 +63,11 @@ private:
      */
     bool                        _search_matchCase = false;
 
+    /**
+     * @brief   If the filesystem tree should expand automatically when searching
+     */
+    bool                        _search_autoExpand = true;
+
 private slots:
     /**
      * @brief   Gets called a new index should be added

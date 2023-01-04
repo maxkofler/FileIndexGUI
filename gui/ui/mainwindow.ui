@@ -15,11 +15,35 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <widget class="QTreeView" name="tv_results"/>
+    </item>
     <item row="0" column="0">
      <widget class="QLineEdit" name="le_search"/>
     </item>
-    <item row="1" column="0">
-     <widget class="QTreeView" name="tv_results"/>
+    <item row="2" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="bt_collapseAll">
+        <property name="text">
+         <string>Collapse All (C)</string>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+C</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bt_expandAll">
+        <property name="text">
+         <string>Expand All (E)</string>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+E</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

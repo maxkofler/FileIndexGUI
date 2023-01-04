@@ -49,10 +49,15 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->actionImport, &QAction::triggered, this, &MainWindow::onActionImport);
     QObject::connect(ui->actionSettings, &QAction::triggered, &_dialog_settings, &QDialog::show);
 
+    QObject::connect(ui->bt_expandAll, &QPushButton::pressed, _tv_results, &QTreeView::expandAll);
+    QObject::connect(ui->bt_collapseAll, &QPushButton::pressed, _tv_results, &QTreeView::collapseAll);
+
     QObject::connect(&_dialog, &IndexDialog::finished, this, &MainWindow::onIndexDialogDone);
     QObject::connect(ui->le_search, &QLineEdit::textChanged, this, &MainWindow::onTeTextChanged);
     QObject::connect(this, &MainWindow::showNewStatusMessage, ui->statusbar, &QStatusBar::showMessage);
     QObject::connect(&_dialog_settings, &QDialog::accepted, this, &MainWindow::reloadSettings);
+
+
 
     QObject::connect(&_searchManager, &SearchManager::resultReady, this, &MainWindow::onSearchResult, Qt::QueuedConnection);
 
@@ -161,32 +166,8 @@ void MainWindow::onTeTextChanged(const QString& text){
 void MainWindow::onSearchResult(std::string searchTerm, FSDir res, uint64_t us_searched){
     FUN();
 
-    //LOGU("[MainWindow][onSearchResult] Got " + std::to_string(res.size()) + " results from search term '" + searchTerm + "'");
-
-    /*if (res.size() == 0){
-        emit showNewStatusMessage(QString().fromStdString("No matches!"));
-        //_sl_results.clear();
-        //_ms_results->setStringList(_sl_results);
-        return;
-    }
-
-    {
-        std::string logMsg;
-        if (res.size() > 1000){
-            logMsg = "Showing 1000 of " + std::to_string(res.size()) + " results";
-
-        } else {
-            logMsg = "Showing " + std::to_string(res.size()) + " results";
-        }
-
-        logMsg += ", searching took " + std::to_string(us_searched) + " us";
-        logMsg += ", sorting took " + std::to_string(_search_stats.us_sort) + " us";
-
-        emit showNewStatusMessage(QString().fromStdString(logMsg));
-    }*/
-
     _m_results.setRoot(res);
-    if (searchTerm != "")
+    if (searchTerm != "" && _search_autoExpand)
         _tv_results->expandAll();
 }
 
@@ -204,6 +185,9 @@ void MainWindow::reloadSettings(){
     QSettings s;
 
     _search_matchCase = s.value("search/matchCase", false).toBool();
+    LOGI("[Settings] matchCase = " + std::to_string(_search_matchCase));
+    _search_autoExpand = s.value("search/autoExpand", true).toBool();
+    LOGI("[Settings] autoExpand = " + std::to_string(_search_autoExpand));
 
     onTeTextChanged(ui->le_search->text());
 }
