@@ -12,7 +12,7 @@
 #include <fstream>
 
 int main(int argc, char *argv[]){
-    hlog = new Log::Log(Log::D);
+    hlog = new Log::Log(Log::I);
 
     std::ofstream* traceFile = new std::ofstream("trace.json");
     hlog->setFeature(Log::FEATURE_PROFILE, true);
