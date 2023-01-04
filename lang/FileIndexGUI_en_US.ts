@@ -16,24 +16,28 @@
     <name>IndexDialog</name>
     <message>
         <location filename="../gui/ui/indexdialog.ui" line="14"/>
+        <location filename="../build/ui/ui_indexdialog.h" line="92"/>
         <location filename="../buildRel/ui/ui_indexdialog.h" line="92"/>
         <source>Index</source>
         <translation>Index new Filesystem</translation>
     </message>
     <message>
         <location filename="../gui/ui/indexdialog.ui" line="48"/>
+        <location filename="../build/ui/ui_indexdialog.h" line="93"/>
         <location filename="../buildRel/ui/ui_indexdialog.h" line="93"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/indexdialog.ui" line="64"/>
+        <location filename="../build/ui/ui_indexdialog.h" line="94"/>
         <location filename="../buildRel/ui/ui_indexdialog.h" line="94"/>
         <source>Path</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/indexdialog.ui" line="77"/>
+        <location filename="../build/ui/ui_indexdialog.h" line="95"/>
         <location filename="../buildRel/ui/ui_indexdialog.h" line="95"/>
         <source>Crate (optional)</source>
         <translation></translation>
@@ -48,84 +52,98 @@
     <name>MainWindow</name>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="14"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="116"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="116"/>
         <source>FileIndexGUI</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="32"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="135"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="135"/>
         <source>Ctrl+C</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="29"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="133"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="133"/>
         <source>Collapse All (C)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="39"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="137"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="137"/>
         <source>Expand All (E)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="42"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="139"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="139"/>
         <source>Ctrl+E</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="61"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="141"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="141"/>
         <source>File</source>
         <translation>File</translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="75"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="117"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="117"/>
         <source>Index</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="78"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="119"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="119"/>
         <source>Ctrl+I</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="86"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="121"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="121"/>
         <source>Save</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="89"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="123"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="123"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="94"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="125"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="125"/>
         <source>Open</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="97"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="127"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="127"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="102"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="129"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="129"/>
         <source>Settings</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="105"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="131"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="131"/>
         <source>Ctrl+,</source>
         <translation></translation>
@@ -157,43 +175,50 @@
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../gui/ui/settingsdialog.ui" line="20"/>
-        <location filename="../buildRel/ui/ui_settingsdialog.h" line="118"/>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../gui/ui/settingsdialog.ui" line="60"/>
+        <location filename="../build/ui/ui_settingsdialog.h" line="120"/>
         <location filename="../buildRel/ui/ui_settingsdialog.h" line="120"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/settingsdialog.ui" line="45"/>
+        <location filename="../build/ui/ui_settingsdialog.h" line="119"/>
         <location filename="../buildRel/ui/ui_settingsdialog.h" line="119"/>
         <source>Startup Database</source>
         <translation></translation>
     </message>
     <message>
+        <location filename="../gui/ui/settingsdialog.ui" line="20"/>
+        <location filename="../build/ui/ui_settingsdialog.h" line="118"/>
+        <location filename="../buildRel/ui/ui_settingsdialog.h" line="118"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../gui/ui/settingsdialog.ui" line="115"/>
+        <location filename="../build/ui/ui_settingsdialog.h" line="124"/>
         <location filename="../buildRel/ui/ui_settingsdialog.h" line="124"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/settingsdialog.ui" line="106"/>
+        <location filename="../build/ui/ui_settingsdialog.h" line="123"/>
         <location filename="../buildRel/ui/ui_settingsdialog.h" line="123"/>
         <source>Expand Tree when searching</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/settingsdialog.ui" line="93"/>
+        <location filename="../build/ui/ui_settingsdialog.h" line="122"/>
         <location filename="../buildRel/ui/ui_settingsdialog.h" line="122"/>
         <source>Match search casing</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/settingsdialog.ui" line="80"/>
+        <location filename="../build/ui/ui_settingsdialog.h" line="121"/>
         <location filename="../buildRel/ui/ui_settingsdialog.h" line="121"/>
         <source>Search</source>
         <translation></translation>
