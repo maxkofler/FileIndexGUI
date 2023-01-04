@@ -155,7 +155,6 @@ void MainWindow::onIndexDone(){
 void MainWindow::onTeTextChanged(const QString& text){
     FUN();
 
-    //Order a new search action
     _searchManager.search(text.toStdString(), _search_matchCase);
 }
 
@@ -192,8 +191,7 @@ void MainWindow::onSearchResult(std::string searchTerm, FSDir res, uint64_t us_s
 void MainWindow::onResultDoubleClicked(const QModelIndex& index){
     FUN();
 
-    QVariant res = _m_results->data(index);
-    std::cout << "Double clicked " << res.toString().toStdString() << std::endl;
+
 }
 
 void MainWindow::reloadSettings(){
