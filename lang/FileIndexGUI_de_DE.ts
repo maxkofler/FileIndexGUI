@@ -56,7 +56,7 @@
         <location filename="../gui/ui/mainwindow.ui" line="32"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="135"/>
         <source>Ctrl+C</source>
-        <translation>Strg+C</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="29"/>
@@ -74,7 +74,7 @@
         <location filename="../gui/ui/mainwindow.ui" line="42"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="139"/>
         <source>Ctrl+E</source>
-        <translation>Strg+E</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="61"/>
