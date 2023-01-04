@@ -78,7 +78,8 @@ int FSTreeModel::columnCount(const QModelIndex &parent) const {
 void FSTreeModel::setRoot(const FSDir &root){
     FUN();
 
-    _rootDir->children = root.children;
+    *_rootDir = root;
+    _rootDir->sortChildrenRec();
     emit layoutChanged();
 }
 
