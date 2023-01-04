@@ -57,9 +57,12 @@ void SearchManager::run(){
 
             //Now start searching
             auto start = std::chrono::high_resolution_clock::now();
-            std::deque<fs_entry> res = _fs.search(curSearch.first, curSearch.second);
+            FSDir res = _fs.searchTree(curSearch.first, curSearch.second);
             auto stop = std::chrono::high_resolution_clock::now();
             auto dur = std::chrono::duration_cast<std::chrono::microseconds>(stop-start);
+
+            //Sort the children
+            res.sortChildrenRec();
 
 			//And emit the signal
             emit resultReady(curSearch.first, res, dur.count());

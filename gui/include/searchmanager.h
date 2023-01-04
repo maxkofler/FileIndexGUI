@@ -37,10 +37,10 @@ signals:
     /**
      * @brief   Gets emited once a search operation finished
      * @param   searchTerm      The 'search' argument passed to search()
-     * @param   entries         A std::deque containing all results as fs_entry
+     * @param   entries         A FSDir containing all results
      * @param   us_searched     The microseconds passed while searched
      */
-    void                        resultReady(std::string searchTerm, std::deque<fs_entry> entries, uint64_t us_searched);
+    void                        resultReady(std::string searchTerm, FSDir entries, uint64_t us_searched);
 
 private:
     /**

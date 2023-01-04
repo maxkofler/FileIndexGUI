@@ -159,15 +159,15 @@ void MainWindow::onTeTextChanged(const QString& text){
     _searchManager.search(text.toStdString(), _search_matchCase);
 }
 
-void MainWindow::onSearchResult(std::string searchTerm, std::deque<fs_entry> res, uint64_t us_searched){
+void MainWindow::onSearchResult(std::string searchTerm, FSDir res, uint64_t us_searched){
     FUN();
 
-    LOGU("[MainWindow][onSearchResult] Got " + std::to_string(res.size()) + " results from search term '" + searchTerm + "'");
+    //LOGU("[MainWindow][onSearchResult] Got " + std::to_string(res.size()) + " results from search term '" + searchTerm + "'");
 
-    if (res.size() == 0){
+    /*if (res.size() == 0){
         emit showNewStatusMessage(QString().fromStdString("No matches!"));
-        _sl_results.clear();
-        _m_results->setStringList(_sl_results);
+        //_sl_results.clear();
+        //_ms_results->setStringList(_sl_results);
         return;
     }
 
@@ -184,8 +184,7 @@ void MainWindow::onSearchResult(std::string searchTerm, std::deque<fs_entry> res
         logMsg += ", sorting took " + std::to_string(_search_stats.us_sort) + " us";
 
         emit showNewStatusMessage(QString().fromStdString(logMsg));
-    }
-
+    }*/
 
     _m_results.setRoot(res);
 }

@@ -105,10 +105,10 @@ private slots:
     /**
      * @brief   Gets called from the searchManager once a result is incoming
      * @param   searchTerm      The string searched for
-     * @param   res             A std::deque containing the fs_entry's found
+     * @param   res             A FSDir as the root of all results
      * @param   us_searched     The us needed for finding the results
      */
-    void                        onSearchResult(std::string searchTerm, std::deque<fs_entry> res, uint64_t us_searched);
+    void                        onSearchResult(std::string searchTerm, FSDir res, uint64_t us_searched);
 
     /**
      * @brief   Gets called every time the user double-clicked a result
