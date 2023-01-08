@@ -9,12 +9,8 @@ class FSTreeModel : public QAbstractItemModel {
     Q_OBJECT
 
 public:
-    FSTreeModel(QObject *parent = nullptr){
-        _rootDir = new FSDir(nullptr, "0", "root", "0", "0");
-    }
-    ~FSTreeModel(){
-        delete _rootDir;
-    }
+    FSTreeModel(QObject *parent = nullptr);
+    ~FSTreeModel();
 
     QVariant                        data(const QModelIndex &index, int role) const override;
     QVariant                        headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;

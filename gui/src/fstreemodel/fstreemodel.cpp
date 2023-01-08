@@ -1,6 +1,15 @@
 #include "log.h"
 #include "fstreemodel.h"
 
+FSTreeModel::FSTreeModel(QObject *parent) : QAbstractItemModel(parent){
+    FUN();
+    _rootDir = new FSDir(nullptr, "0", "root", "0", "0");
+}
+
+FSTreeModel::~FSTreeModel(){
+    FUN();
+    delete _rootDir;
+}
 
 QVariant FSTreeModel::data(const QModelIndex &index, int role) const {
     FUN();
@@ -34,7 +43,7 @@ QModelIndex FSTreeModel::index(int row, int column, const QModelIndex &parent) c
     if (!parentItem)
         return QModelIndex();
 
-    FSEntry* childItem = parentItem->child(row).get();
+    FSEntry* childItem = parentItem->child((size_t)row).get();
     if (childItem)
         return createIndex(row, column, childItem);
     else
@@ -53,7 +62,7 @@ QModelIndex FSTreeModel::parent(const QModelIndex &index) const {
     if (parentItem == _rootDir || !parentItem)
         return QModelIndex();
 
-    return createIndex(parentItem->childNumber(), 0, parentItem);
+    return createIndex((int)parentItem->childNumber(), 0, parentItem);
 }
 
 
