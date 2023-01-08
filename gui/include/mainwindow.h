@@ -51,7 +51,6 @@ private:
 
     //Objects for results list
     QTreeView*                  _tv_results = nullptr;
-    FSTreeModel                 _m_results;
 
     stats_search                _search_stats;
 

@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Set up the results tree
     _tv_results = ui->tv_results;
-    _tv_results->setModel(&_m_results);
+    _tv_results->setModel(nullptr);
 
     //Connect signals
     QObject::connect(ui->actionIndex, &QAction::triggered, this, &MainWindow::onNewIndex);
@@ -166,7 +166,19 @@ void MainWindow::onTeTextChanged(const QString& text){
 void MainWindow::onSearchResult(std::string searchTerm, FSDir res, uint64_t us_searched){
     FUN();
 
-    _m_results.setRoot(res);
+    //Save the old model to delete it later
+    QAbstractItemModel* oldModel = _tv_results->model();
+
+    //Create the new model, add the root and add it to the TreeView
+    FSTreeModel* newModel = new FSTreeModel();
+    newModel->setRoot(res);
+    _tv_results->setModel(newModel);
+
+    //If the old model is valid, delete it
+    if (oldModel != nullptr)
+        delete oldModel;
+
+    //Expand the tree if desired
     if (searchTerm != "" && _search_autoExpand)
         _tv_results->expandAll();
 }
