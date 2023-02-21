@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow),
   _dialog(this),
   _dialog_settings(this),
+  _dialog_remove(_fs, this),
   _sql(),
   _fs(_sql),
   _index(&_fs),
@@ -49,6 +50,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->actionImport, &QAction::triggered, this, &MainWindow::onActionImport);
     QObject::connect(ui->actionSettings, &QAction::triggered, &_dialog_settings, &QDialog::show);
 
+    QObject::connect(ui->actionDelete_Entry, &QAction::triggered, this, &MainWindow::onActionDelete);
+
     QObject::connect(ui->bt_expandAll, &QPushButton::pressed, _tv_results, &QTreeView::expandAll);
     QObject::connect(ui->bt_collapseAll, &QPushButton::pressed, _tv_results, &QTreeView::collapseAll);
 
@@ -57,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this, &MainWindow::showNewStatusMessage, ui->statusbar, &QStatusBar::showMessage);
     QObject::connect(&_dialog_settings, &QDialog::accepted, this, &MainWindow::reloadSettings);
 
-
+    QObject::connect(&_dialog_remove, &QDialog::finished, this, &MainWindow::onRemoveDone);
 
     QObject::connect(&_searchManager, &SearchManager::resultReady, this, &MainWindow::onSearchResult, Qt::QueuedConnection);
 
@@ -126,6 +129,14 @@ void MainWindow::onActionImport(){
     onTeTextChanged(ui->le_search->text());
 }
 
+void MainWindow::onActionDelete(){
+    FUN();
+
+    _dialog_remove.setModal(true);
+    _dialog_remove.setTarget(((FSEntry*)_tv_results->currentIndex().internalPointer())->id);
+    _dialog_remove.show();
+}
+
 void MainWindow::onIndexDialogDone(int){
     FUN();
 
@@ -157,6 +168,13 @@ void MainWindow::onIndexDone(){
     ui->le_search->setDisabled(false);
 }
 
+void MainWindow::onRemoveDone(int res){
+    FUN();
+
+    emit _tv_results->model()->layoutChanged();
+    onTeTextChanged(ui->le_search->text());
+}
+
 void MainWindow::onTeTextChanged(const QString& text){
     FUN();
 
@@ -185,7 +203,6 @@ void MainWindow::onSearchResult(std::string searchTerm, FSDir res, uint64_t us_s
 
 void MainWindow::onResultDoubleClicked(const QModelIndex& index){
     FUN();
-
 
 }
 

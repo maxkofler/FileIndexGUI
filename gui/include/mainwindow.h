@@ -16,6 +16,7 @@
 #include "searchmanager.h"
 #include "stats.h"
 #include "fstreemodel.h"
+#include "removedialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -56,6 +57,7 @@ private:
 
     IndexDialog                 _dialog;
     SettingsDialog              _dialog_settings;
+    RemoveDialog                _dialog_remove;
 
     /**
      * @brief   If the search should match the cases
@@ -84,6 +86,11 @@ private slots:
     void                        onActionImport();
 
     /**
+     * @brief   Gets called when an entry should be deleted
+     */
+    void                        onActionDelete();
+
+    /**
      * @brief   Tells the main window a new fs entry has been found, updates the status bar
      * @param   path            The path of the entry
      * @param   isDir           If it is a directory
@@ -99,6 +106,11 @@ private slots:
      * @brief   Notifies the class that the indexing process has been finished and the indexer can be cleaned up
      */
     void                        onIndexDone();
+
+    /**
+     * @brief   Notifies the class that a remove operation has finished
+     */
+    void                        onRemoveDone(int res);
 
     /**
      * @brief   If the text in the search bar has changed, triggers a new search
