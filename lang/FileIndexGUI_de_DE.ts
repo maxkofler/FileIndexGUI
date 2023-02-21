@@ -52,114 +52,132 @@
     <name>MainWindow</name>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="14"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="116"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="124"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="116"/>
         <source>FileIndexGUI</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="32"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="135"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="147"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="135"/>
         <source>Ctrl+C</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="29"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="133"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="145"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="133"/>
         <source>Collapse All (C)</source>
         <translation>Alle Einklappen (C)</translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="39"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="137"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="149"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="137"/>
         <source>Expand All (E)</source>
         <translation>Alle Ausklappen (E)</translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="42"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="139"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="151"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="139"/>
         <source>Ctrl+E</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../gui/ui/mainwindow.ui" line="61"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="141"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="153"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="141"/>
         <source>File</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="75"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="117"/>
+        <location filename="../gui/ui/mainwindow.ui" line="72"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="154"/>
+        <source>Edit</source>
+        <translation>Bearbeiten</translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/mainwindow.ui" line="82"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="125"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="117"/>
         <source>Index</source>
         <translation>Neuer index</translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="78"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="119"/>
+        <location filename="../gui/ui/mainwindow.ui" line="85"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="127"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="119"/>
         <source>Ctrl+I</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="86"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="121"/>
+        <location filename="../gui/ui/mainwindow.ui" line="93"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="129"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="121"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="89"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="123"/>
+        <location filename="../gui/ui/mainwindow.ui" line="96"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="131"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="123"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="94"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="125"/>
+        <location filename="../gui/ui/mainwindow.ui" line="101"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="133"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="125"/>
         <source>Open</source>
         <translation>Öffnen</translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="97"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="127"/>
+        <location filename="../gui/ui/mainwindow.ui" line="104"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="135"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="127"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="102"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="129"/>
+        <location filename="../gui/ui/mainwindow.ui" line="109"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="137"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="129"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../gui/ui/mainwindow.ui" line="105"/>
-        <location filename="../build/ui/ui_mainwindow.h" line="131"/>
+        <location filename="../gui/ui/mainwindow.ui" line="112"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="139"/>
         <location filename="../buildRel/ui/ui_mainwindow.h" line="131"/>
         <source>Ctrl+,</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="98"/>
+        <location filename="../gui/ui/mainwindow.ui" line="117"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="141"/>
+        <source>Delete Entry</source>
+        <translation>Eintrag entfernen</translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/mainwindow.ui" line="120"/>
+        <location filename="../build/ui/ui_mainwindow.h" line="143"/>
+        <source>Del</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="101"/>
         <source>Save FileIndex Database</source>
         <translation>Datenbank speichern</translation>
     </message>
     <message>
-        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="98"/>
+        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="101"/>
         <source>FileIndex Database (*.fidb)</source>
         <translation>FileIndex Datenbank</translation>
     </message>
     <message>
-        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="111"/>
+        <location filename="../gui/src/mainwindow/mainwindow.cpp" line="114"/>
         <source>Select the file to import</source>
         <translation>Datei wählen</translation>
     </message>
@@ -170,6 +188,21 @@
         <location filename="../gui/src/main.cpp" line="38"/>
         <source>Starting up...</source>
         <translation>Starte...</translation>
+    </message>
+</context>
+<context>
+    <name>RemoveDialog</name>
+    <message>
+        <location filename="../gui/ui/removedialog.ui" line="17"/>
+        <location filename="../build/ui/ui_removedialog.h" line="56"/>
+        <source>Dialog</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/removedialog.ui" line="23"/>
+        <location filename="../build/ui/ui_removedialog.h" line="57"/>
+        <source>Deleting...</source>
+        <translation>Loeschen...</translation>
     </message>
 </context>
 <context>
